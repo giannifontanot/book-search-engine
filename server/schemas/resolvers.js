@@ -1,43 +1,33 @@
-const { Thought } = require('../models');
+const {Book, User} = require('../models');
+const {AuthenticationError} = require('apollo-server-express');
+const {signToken} = require('../utils/auth');
+
 
 const resolvers = {
-  Query: {
-    thoughts: async () => {
-      return Thought.find().sort({ createdAt: -1 });
-    },
-
-    thought: async (parent, { thoughtId }) => {
-      return Thought.findOne({ _id: thoughtId });
-    },
-  },
-
-  Mutation: {
-    addThought: async (parent, { thoughtText, thoughtAuthor }) => {
-      return Thought.create({ thoughtText, thoughtAuthor });
-    },
-    addComment: async (parent, { thoughtId, commentText }) => {
-      return Thought.findOneAndUpdate(
-        { _id: thoughtId },
-        {
-          $addToSet: { comments: { commentText } },
+    Query: {
+        getSingleUser: async (parent, args, context) => {
+            return User.findOne({_id: context.user._id});
         },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
+
+        login: async (parent, {email, password}) => {
+            const user = await User.findOne({email});
+            const correctPassword = await User.isCorrectPassword(password);
+            const token = signToken(user);
+            return {token, user};
+        },
     },
-    removeThought: async (parent, { thoughtId }) => {
-      return Thought.findOneAndDelete({ _id: thoughtId });
+
+    Mutation: {
+        createUser: async (parent, args) => {
+            return User.create(args);
+        },
+        saveBook: async (parent, args) => {
+            return Book.create(args);
+        },
+        deleteBook: async (parent, {bookId}) => {
+            return Book.findOneAndDelete({bookId});
+        },
     },
-    removeComment: async (parent, { thoughtId, commentId }) => {
-      return Thought.findOneAndUpdate(
-        { _id: thoughtId },
-        { $pull: { comments: { _id: commentId } } },
-        { new: true }
-      );
-    },
-  },
 };
 
 module.exports = resolvers;
