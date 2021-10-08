@@ -14,8 +14,8 @@ const app = express();
 
 
 
-/////////
-async function startServer() {
+
+async function startApolloServer() {
   let apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
@@ -24,8 +24,8 @@ async function startServer() {
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
 }
-startServer();
-/////////
+startApolloServer();
+
 
 
 
