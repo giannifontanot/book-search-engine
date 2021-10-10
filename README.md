@@ -2,7 +2,7 @@
 ![Status Buggy](https://img.shields.io/badge/Status-Buggy-red)
 [![MIT License](https://img.shields.io/badge/License-MIT%20License-brightgreen)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 # Book Search Engine
-This application helps the users to search for new books to read and keep alist of books to purchase.
+This application helps the users to search for new books to read and keep a list of books to purchase.
 ## Table of Contents
 - Book Search Engine
 	* [Installation](#installation)
@@ -36,7 +36,7 @@ The user can type a search term in a search box and the results will appear on t
 ## Future Features
 ````````````````````````
 - Themes options
-- Sharable favorites lists
+- Shareable favorites lists
 ````````````````````````
 ## Contributions
 If you would like to contribute to this project , you are very welcome! You can fork it and later submit a pull request. 
